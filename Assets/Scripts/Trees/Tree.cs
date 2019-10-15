@@ -6,21 +6,12 @@ public class Tree : MonoBehaviour
 {
 
     public Animator anim;
-    
+
+    public int durability;
+
     public void beginCutting()
     {
-        anim.SetTrigger("treefall");
+        anim.SetTrigger("treebreak");
     }
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    
 }

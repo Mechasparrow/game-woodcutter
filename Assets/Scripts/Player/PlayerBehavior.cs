@@ -21,6 +21,11 @@ public class PlayerBehavior : MonoBehaviour
         canObtainLog = true;
     }
 
+    private void OnCollisionEnter(Collision collision)
+    {
+        Debug.Log("Col");
+    }
+
     private void OnControllerColliderHit(ControllerColliderHit hit)
     {
         string tag = hit.collider.gameObject.tag;
