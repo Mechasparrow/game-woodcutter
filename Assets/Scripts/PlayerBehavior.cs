@@ -6,18 +6,26 @@ public class PlayerBehavior : MonoBehaviour
 {
 
     public Animator anim;
+    public int logs;
+
+    public LogsDisplay logDisplay;
+
+    private bool canObtainLog;
+    private float logTimer = 0.0f;
+    private float logTimeDuration = 1.0f;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        logs = 0;
+        canObtainLog = true;
     }
 
     private void OnControllerColliderHit(ControllerColliderHit hit)
     {
         string tag = hit.collider.gameObject.tag;
         GameObject go = hit.collider.gameObject;
-        if (hit.collider.gameObject.CompareTag("tree_barrier"))
+        if (go.CompareTag("tree_barrier"))
         {
             GameObject tree = go.transform.parent.gameObject.transform.parent.gameObject;
             bool cut = anim.GetCurrentAnimatorStateInfo(0).IsName("Cut");
@@ -26,16 +34,54 @@ public class PlayerBehavior : MonoBehaviour
                 Tree t = tree.GetComponent<Tree>();
                 t.beginCutting();
             }
+        }else if (go.CompareTag("log") && canObtainLog)
+        {
+            //Destroy the log
+            GameObject Log = go;
+            Destroy(Log);
+
+            //increment the log count and update display
+            logs++;
+            logDisplay.updateLogsCount(logs);
+
+            //reset log timer and stats
+            resetLogTimer();
+            
         }
     }
 
-    // Update is called once per frame
-    void Update()
+    void axeControls()
     {
         bool mousePress = Input.GetMouseButtonDown(0);
         if (mousePress)
         {
             anim.SetTrigger("Cut");
         }
+    }
+
+    void resetLogTimer()
+    {
+        canObtainLog = false;
+        logTimer = 0.0f;
+    }
+
+    void logTimerBehavior()
+    {
+        if (logTimer > logTimeDuration)
+        {
+            canObtainLog = true;
+        }else
+        {
+            logTimer += Time.deltaTime;
+        }
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+
+        logTimerBehavior();
+        axeControls();
+
     }
 }
