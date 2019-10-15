@@ -292,7 +292,6 @@ GameObject:
   - component: {fileID: 1535554315}
   - component: {fileID: 1535554314}
   - component: {fileID: 1535554313}
-  - component: {fileID: 1535554317}
   m_Layer: 0
   m_Name: TreeBarrier
   m_TagString: tree_barrier
@@ -373,18 +372,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1535554311}
   m_Mesh: {fileID: 4300002, guid: 38a6f0dd394a160498687270f0f81dfd, type: 3}
---- !u!114 &1535554317
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1535554311}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e3101d30a4cc0d24cb08f0e043f60b4b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1822214811
 GameObject:
   m_ObjectHideFlags: 0
@@ -719,6 +706,19 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &7547746980465616659
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7547746980465616656}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e3101d30a4cc0d24cb08f0e043f60b4b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  anim: {fileID: 7547746980465616658}
 --- !u!1 &7547746980465616660 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7519813015064508985, guid: ce37c3f8ba8d1c94f8cacd05acd09bc4,
