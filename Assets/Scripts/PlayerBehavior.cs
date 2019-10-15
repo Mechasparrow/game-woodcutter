@@ -13,6 +13,22 @@ public class PlayerBehavior : MonoBehaviour
         
     }
 
+    private void OnControllerColliderHit(ControllerColliderHit hit)
+    {
+        string tag = hit.collider.gameObject.tag;
+        GameObject go = hit.collider.gameObject;
+        if (hit.collider.gameObject.CompareTag("tree_barrier"))
+        {
+            GameObject tree = go.transform.parent.gameObject.transform.parent.gameObject;
+            bool cut = anim.GetCurrentAnimatorStateInfo(0).IsName("Cut");
+            if (cut)
+            {
+                Tree t = tree.GetComponent<Tree>();
+                t.beginCutting();
+            }
+        }
+    }
+
     // Update is called once per frame
     void Update()
     {

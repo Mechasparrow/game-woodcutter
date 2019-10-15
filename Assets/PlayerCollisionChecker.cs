@@ -2,20 +2,17 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Tree : MonoBehaviour
+public class PlayerCollisionChecker : MonoBehaviour
 {
-
-    public Animator anim;
-    
-    public void beginCutting()
-    {
-        anim.SetTrigger("treefall");
-    }
-
     // Start is called before the first frame update
     void Start()
     {
         
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        Debug.Log("Collision!");
     }
 
     // Update is called once per frame
