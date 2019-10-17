@@ -26,10 +26,18 @@ public class TreeFall : StateMachineBehaviour
         GameObject treetop = go.transform.GetChild(1).gameObject;
         GameObject breakAway = go.transform.GetChild(2).gameObject;
 
-        
+
         //Spawn logs
-        GameObject log = Instantiate(logs);
-        log.transform.position = breakAway.transform.position;
+        int log_count = 0;
+        log_count = (int)Mathf.Ceil(Random.Range(0, 3));
+
+        Debug.Log("Log count: " + log_count.ToString());
+
+        for (int i = 0; i < log_count; i++)
+        {
+            GameObject log = Instantiate(logs);
+            log.transform.position = breakAway.transform.position;
+        }
 
         //Destroy Tree parts
         Destroy(breakAway);
