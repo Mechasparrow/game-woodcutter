@@ -1354,6 +1354,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   anim: {fileID: 8883192342203579086}
   logs: 0
+  logsMax: 10
   logDisplay: {fileID: 917233974}
 --- !u!114 &1225250336 stripped
 MonoBehaviour:
@@ -2104,6 +2105,21 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 670927470143107992, guid: 02cc13e00133a7041bf15c44f8f9cae1,
+        type: 3}
+      propertyPath: m_MouseLook.clampVerticalRotation
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 670927470143107992, guid: 02cc13e00133a7041bf15c44f8f9cae1,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 670927470143107992, guid: 02cc13e00133a7041bf15c44f8f9cae1,
+        type: 3}
+      propertyPath: m_MouseLook.lockCursor
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 670927470132042328, guid: 02cc13e00133a7041bf15c44f8f9cae1,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -2168,21 +2184,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Height
       value: 1.8
-      objectReference: {fileID: 0}
-    - target: {fileID: 670927470143107992, guid: 02cc13e00133a7041bf15c44f8f9cae1,
-        type: 3}
-      propertyPath: m_MouseLook.clampVerticalRotation
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 670927470143107992, guid: 02cc13e00133a7041bf15c44f8f9cae1,
-        type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 670927470143107992, guid: 02cc13e00133a7041bf15c44f8f9cae1,
-        type: 3}
-      propertyPath: m_MouseLook.lockCursor
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 670927470128653592, guid: 02cc13e00133a7041bf15c44f8f9cae1,
         type: 3}

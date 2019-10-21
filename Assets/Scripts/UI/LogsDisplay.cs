@@ -15,12 +15,11 @@ public class LogsDisplay : MonoBehaviour
         templateString = "Logs: ";
         displayText = GetComponent<Text>();
 
-        updateLogsCount(0);
     }
 
-    public void updateLogsCount(int count)
+    public void updateLogsCount(int count, int maxCount)
     {
-        displayText.text = templateString + count.ToString();
+        displayText.text = templateString + count.ToString() + "/" + maxCount.ToString();
     }
     
 }

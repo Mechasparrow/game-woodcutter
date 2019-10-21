@@ -37,7 +37,7 @@ public class CraftLogCabinButton : MonoBehaviour
 
         //Take the logs
         pb.logs -= log_cost;
-        pb.logDisplay.updateLogsCount(pb.logs);
+        pb.updateUILogs();
 
         //Spawn the building
         GameObject b = Instantiate(building);

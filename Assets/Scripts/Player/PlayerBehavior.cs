@@ -6,7 +6,9 @@ public class PlayerBehavior : MonoBehaviour
 {
 
     public Animator anim;
+
     public int logs;
+    public int logsMax;
 
     public LogsDisplay logDisplay;
 
@@ -19,6 +21,13 @@ public class PlayerBehavior : MonoBehaviour
     {
         logs = 0;
         canObtainLog = true;
+
+        updateUILogs();
+    }
+    
+    public void updateUILogs()
+    {
+        logDisplay.updateLogsCount(logs, logsMax);
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -46,8 +55,12 @@ public class PlayerBehavior : MonoBehaviour
             Destroy(Log);
 
             //increment the log count and update display
-            logs++;
-            logDisplay.updateLogsCount(logs);
+            if (logs < logsMax)
+            {
+                logs++;
+            }
+
+            updateUILogs();
 
             //reset log timer and stats
             resetLogTimer();
