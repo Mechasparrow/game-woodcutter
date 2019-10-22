@@ -18,6 +18,10 @@ public class PlayerBehavior : MonoBehaviour
     private float logTimer = 0.0f;
     private float logTimeDuration = 1.0f;
 
+    private bool canExecuteCut;
+    private float cutTimer = 0.0f;
+    private float cutTimeDuration = 1.0f;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -54,11 +58,16 @@ public class PlayerBehavior : MonoBehaviour
             bool cut = anim.GetCurrentAnimatorStateInfo(0).IsName("Cut");
 
             //If cutting with axe
-            if (cut)
+            if (cut && canExecuteCut)
             {
                 //begin cutting down the tree and associated animations
                 Tree t = tree.GetComponent<Tree>();
-                t.beginCutting();
+                if (!t.checkBreaking())
+                {
+                    Debug.Log("break!");
+                    t.beginCutting();
+                    resetCutTimer();
+                }
             }
 
         }
@@ -107,6 +116,12 @@ public class PlayerBehavior : MonoBehaviour
         logTimer = 0.0f;
     }
 
+    void resetCutTimer()
+    {
+        canExecuteCut = false;
+        cutTimer = 0.0f;
+    }
+
     //Behavior for the log timer
     void logTimerBehavior()
     {
@@ -122,11 +137,28 @@ public class PlayerBehavior : MonoBehaviour
         }
     }
     
+    //Behavior for the cut timer
+    void cutTimerBehavior()
+    {
+        //cut timer passed required time elapsed
+        if (cutTimer > cutTimeDuration)
+        {
+            //player can now cut again
+            canExecuteCut = true;
+        }
+        else
+        {
+            //If not, keep incrementing the cut timer
+            cutTimer += Time.deltaTime;
+        }
+    }
+
     //Frame game loop function
     void Update()
     {
         //Call looped behaviors
         logTimerBehavior();
+        cutTimerBehavior();
         axeControls();
 
     }

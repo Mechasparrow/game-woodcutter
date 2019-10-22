@@ -6,6 +6,7 @@ using UnityEngine;
 //Deals with general tree behavior
 public class Tree : MonoBehaviour
 {
+    
 
     //TODO have this take care of the tree breaking durability system
 
@@ -15,10 +16,22 @@ public class Tree : MonoBehaviour
     //Durability of the tree
     public int durability;
 
+    public bool checkBreaking()
+    {
+        return anim.GetCurrentAnimatorStateInfo(0).IsName("breaking");
+    }
+
     //Function to trigger the tree breaking animation
     public void beginCutting()
     {
-        anim.SetTrigger("treebreak");
+        if (durability > 0)
+        {
+            anim.SetTrigger("treebreak");
+            durability--;
+        }else
+        {
+            anim.SetTrigger("treefall");
+        }
     }
     
 }
