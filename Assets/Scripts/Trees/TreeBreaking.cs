@@ -2,51 +2,42 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+//Deals with Tree breaking animation behavior
 public class TreeBreaking : StateMachineBehaviour
 {
-    // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
+    //Triggered at the beginning of the tree breaking state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
+        //Grab tree and tree behavior component
         GameObject tree = animator.gameObject;
         Tree treeScript = tree.GetComponent<Tree>();
 
-
+        //If the tree has no durability left
         if (treeScript.durability <= 0)
         {
+            //Make the tree fall
             animator.SetBool("treefall", true);
         }
         else
         {
+            //If not, don't make the tree fall
             animator.SetBool("treefall", false);
-
         }
         
     }
-
-    // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
-    //override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
-    //{
-    //    
-    //}
-
-    // OnStateExit is called when a transition ends and the state machine finishes evaluating this state
+    
+    //Triggered at the end of the tree breaking state
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
+        //Grab the tree object
         GameObject tree = animator.gameObject;
+
+        //Grab associated tree behavior script
         Tree treeScript = tree.GetComponent<Tree>();
+
+        //decrease durability of the tree by one
         treeScript.durability -= 1;
 
     }
-
-    // OnStateMove is called right after Animator.OnAnimatorMove()
-    //override public void OnStateMove(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
-    //{
-    //    // Implement code that processes and affects root motion
-    //}
-
-    // OnStateIK is called right after Animator.OnAnimatorIK()
-    //override public void OnStateIK(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
-    //{
-    //    // Implement code that sets up animation IK (inverse kinematics)
-    //}
+    
 }
