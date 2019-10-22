@@ -2,42 +2,54 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityStandardAssets.Characters.FirstPerson;
+
+
 public class CraftingMenuHandler : MonoBehaviour
 {
     public GameObject craftingMenu;
     public FirstPersonController fpc;
     
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
+    //things the menu should check for to pull it up
     void menuCheck()
     {
+        //get if menu key pressed
         bool menuKey = Input.GetKeyUp(KeyCode.E);
 
+        //If pressed
         if (menuKey)
         {
-            switch (craftingMenu.activeInHierarchy)
+            //Check if menu is currently activated
+            bool menuActive = craftingMenu.activeInHierarchy;
+
+            if (menuActive) //If so
             {
-                case true:
-                    craftingMenu.SetActive(false);
-                    fpc.m_MouseLook.SetCursorLock(true);
-                    break;
-                default:
-                    craftingMenu.SetActive(true);
-                    fpc.m_MouseLook.SetCursorLock(false);
-                    break;
-                    
+                //hide the menu
+                hideMenu();
+            }else
+            {   
+                //else pull up the menu
+                pullUpMenu();
             }
+            
         }
 
     }
 
+    //hides the menu and locks the mouse
+    private void hideMenu()
+    {
+        craftingMenu.SetActive(false);
+        fpc.m_MouseLook.SetCursorLock(true);
+    }
 
-    // Update is called once per frame
+    //pulls up the menu and enables the mouse cursor
+    private void pullUpMenu()
+    {
+        craftingMenu.SetActive(true);
+        fpc.m_MouseLook.SetCursorLock(false);
+    }
+    
+    //Check the menu behavior each frame
     void Update()
     {
         menuCheck();
