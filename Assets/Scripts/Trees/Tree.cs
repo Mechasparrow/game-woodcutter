@@ -6,9 +6,11 @@ using UnityEngine;
 //Deals with general tree behavior
 public class Tree : MonoBehaviour
 {
-    
+
 
     //TODO have this take care of the tree breaking durability system
+    //Log to spawn
+    public GameObject log;
 
     //Reference to the tree animator controller
     public Animator anim;
