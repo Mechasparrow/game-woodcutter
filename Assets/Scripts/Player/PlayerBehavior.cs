@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+//Behavior associated with player
 public class PlayerBehavior : MonoBehaviour
 {
     //Animator for player actions
@@ -15,12 +16,17 @@ public class PlayerBehavior : MonoBehaviour
 
     // Makes sure that the player does not "pick up" logs that do not exist
     private bool canObtainLog; // Can the player pickup a log
-    private float logTimer = 0.0f;
-    private float logTimeDuration = 1.0f;
+    private float logTimer = 0.0f; //Timer to track time elapsed since last log obtained
+    private float logTimeDuration = 1.0f; //Duration to wait before obtaining additional logs
 
-    private bool canExecuteCut;
-    private float cutTimer = 0.0f;
-    private float cutTimeDuration = 1.0f;
+    //Ditto as previous 3 variables with variation
+    // Makes sure that the player does not accidently "cut" twice
+
+    //TODO switch this over to a raycasting system
+
+    private bool canExecuteCut; //Can the player execute the cutting action
+    private float cutTimer = 0.0f; //Delay before player can cut again
+    private float cutTimeDuration = 1.0f; // Time required before player can cut again
 
     // Start is called before the first frame update
     void Start()
@@ -57,16 +63,31 @@ public class PlayerBehavior : MonoBehaviour
             //Check if player in cutting animation
             bool cut = anim.GetCurrentAnimatorStateInfo(0).IsName("Cut");
 
-            //If cutting with axe
+            //If cutting with axe and allowed to cut
             if (cut && canExecuteCut)
             {
                 //begin cutting down the tree and associated animations
                 Tree t = tree.GetComponent<Tree>();
+
+                //Check if the tree is not already being broken
                 if (!t.checkBreaking())
                 {
-                    Debug.Log("break!");
+                    //If so
+                    // Send a cut event to the selected tree.
+
+                    //trigger beginCutting behavior in the tree
+                    //Lower durablity
+                    //Switches to breaking animation
+                    // Refer to Tree.cs
                     t.beginCutting();
+
+                    //Reset the cut timer, prevents player from cutting tree too fast.
                     resetCutTimer();
+
+
+                    //Debug statement
+                    //Debug.Log("break!");
+
                 }
             }
 
@@ -116,6 +137,7 @@ public class PlayerBehavior : MonoBehaviour
         logTimer = 0.0f;
     }
 
+    //Resets the cut timer when player cuts
     void resetCutTimer()
     {
         canExecuteCut = false;
