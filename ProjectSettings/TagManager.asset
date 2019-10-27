@@ -6,6 +6,7 @@ TagManager:
   tags:
   - tree_barrier
   - log
+  - fruit
   layers:
   - Default
   - TransparentFX

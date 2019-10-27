@@ -12,7 +12,12 @@ public class PlayerBehavior : MonoBehaviour
     public int logs; // how many is being held
     public int logsMax; // max amount that can be held at a given time
 
-    public LogsDisplay logDisplay; // UI reference to log display game object
+    //Player fruits attributes
+    public int fruits;
+    public int fruitsMax;
+
+    private ResourceDisplay logDisplay; // UI reference to log display behavior
+    private  ResourceDisplay fruitDisplay; // UI reference to fruit display behavior
 
     // Makes sure that the player does not "pick up" logs that do not exist
     private bool canObtainLog; // Can the player pickup a log
@@ -35,6 +40,10 @@ public class PlayerBehavior : MonoBehaviour
         logs = 0;
         canObtainLog = true;
 
+        //Retrieve the UI display behaviors
+        logDisplay = GameObject.Find("LogsDisplay").GetComponent<ResourceDisplay>();
+        fruitDisplay = GameObject.Find("FruitsDisplay").GetComponent<ResourceDisplay>();
+
         //update the logs display
         updateUILogs();
     }
@@ -42,7 +51,8 @@ public class PlayerBehavior : MonoBehaviour
     //updates the logDisplay component with logs and max amount of logs that can be carried
     public void updateUILogs()
     {
-        logDisplay.updateLogsCount(logs, logsMax);
+        logDisplay.updateCount(logs, logsMax);
+        fruitDisplay.updateCount(fruits, fruitsMax);
     }
 
     //Checks if the player has collided with something while moving
@@ -114,6 +124,25 @@ public class PlayerBehavior : MonoBehaviour
             //reset log timer and stats
             resetLogTimer();
             
+        }else if (go.CompareTag("fruit") && canObtainLog)
+        {
+            // TL;DR pickup the fruit and add it to inventory
+
+            //Destroy the Fruit
+            GameObject Fruit = go;
+            Destroy(Fruit);
+
+            //increment the log count 
+            if (fruits < fruitsMax)
+            {
+                fruits++;
+            }
+
+            //update the log display
+            updateUILogs();
+
+            //reset log timer and stats
+            resetLogTimer();
         }
     }
 
