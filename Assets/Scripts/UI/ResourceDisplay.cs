@@ -17,7 +17,7 @@ public class ResourceDisplay : MonoBehaviour
     private void Start()
     {
         // Pull the Text UI component
-        this.displayText = GetComponent<Text>();
+        displayText = GetComponent<Text>();
 
     }
 
