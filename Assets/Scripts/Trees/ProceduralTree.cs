@@ -5,24 +5,23 @@ using UnityEngine;
 public class ProceduralTree : MonoBehaviour
 {
     public GameObject trunk;
+    public GameObject leafs;
 
     public GameObject leafPrefab;
 
-    public Transform leafPos;
+    public Transform[] leafPositions;
 
     // Start is called before the first frame update
     void Start()
     {
-        scaleTrunk(0.5f);
-        spawnLeaf(leafPos);
+        scaleTrunk(1.5f);
+
+        foreach (Transform leafPos in leafPositions)
+        {
+            spawnLeaf(leafPos);
+        }
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
-
+    
     void scaleTrunk(float scale)
     {
         Vector3 trunkScale = trunk.transform.localScale;
@@ -34,9 +33,8 @@ public class ProceduralTree : MonoBehaviour
     void spawnLeaf(Transform transform)
     {
         GameObject newLeaf = Instantiate(leafPrefab);
-        newLeaf.transform.SetParent(transform);
-
-        newLeaf.transform.localScale = new Vector3(4, 4, 4);
+        
+        newLeaf.transform.SetParent(leafs.transform);
         newLeaf.transform.position = transform.position;
     }
 
