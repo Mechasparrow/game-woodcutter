@@ -7,6 +7,7 @@ TagManager:
   - tree_barrier
   - log
   - fruit
+  - trunk
   layers:
   - Default
   - TransparentFX
@@ -17,7 +18,7 @@ TagManager:
   - 
   - 
   - PostProcessing
-  - 
+  - Trunk
   - 
   - 
   - 

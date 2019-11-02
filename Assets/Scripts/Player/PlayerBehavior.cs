@@ -55,6 +55,46 @@ public class PlayerBehavior : MonoBehaviour
         fruitDisplay.updateCount(fruits, fruitsMax);
     }
 
+    private void OnTreeVisible(GameObject tree) {
+        if (tree == null)
+        {
+            return;
+        }
+
+        //Check if player in cutting animation
+        bool cut = anim.GetCurrentAnimatorStateInfo(0).IsName("Cut");
+
+        //If cutting with axe and allowed to cut
+        if (cut && canExecuteCut)
+        {
+            //begin cutting down the tree and associated animations
+            Tree t = tree.GetComponent<Tree>();
+
+            //Check if the tree is not already being broken
+            if (!t.checkBreaking())
+            {
+                //If so
+                // Send a cut event to the selected tree.
+
+                //trigger beginCutting behavior in the tree
+                //Lower durablity
+                //Switches to breaking animation
+                // Refer to Tree.cs
+                t.beginCutting();
+
+                //Reset the cut timer, prevents player from cutting tree too fast.
+                resetCutTimer();
+
+
+                //Debug statement
+                //Debug.Log("break!");
+
+            }
+        }
+
+
+    }
+
     //Checks if the player has collided with something while moving
     private void OnControllerColliderHit(ControllerColliderHit hit)
     {
@@ -64,47 +104,9 @@ public class PlayerBehavior : MonoBehaviour
         //filter down to essential collided gameobject
         GameObject go = hit.collider.gameObject;
 
-        //Check if a tree was hit
-        if (go.CompareTag("tree_barrier"))
-        {
-            //Rename it to a tree itself (hierachy traversal)
-            GameObject tree = go.transform.parent.gameObject.transform.parent.gameObject;
-
-            //Check if player in cutting animation
-            bool cut = anim.GetCurrentAnimatorStateInfo(0).IsName("Cut");
-
-            //If cutting with axe and allowed to cut
-            if (cut && canExecuteCut)
-            {
-                //begin cutting down the tree and associated animations
-                Tree t = tree.GetComponent<Tree>();
-
-                //Check if the tree is not already being broken
-                if (!t.checkBreaking())
-                {
-                    //If so
-                    // Send a cut event to the selected tree.
-
-                    //trigger beginCutting behavior in the tree
-                    //Lower durablity
-                    //Switches to breaking animation
-                    // Refer to Tree.cs
-                    t.beginCutting();
-
-                    //Reset the cut timer, prevents player from cutting tree too fast.
-                    resetCutTimer();
-
-
-                    //Debug statement
-                    //Debug.Log("break!");
-
-                }
-            }
-
-        }
-
+        
         //If the player collided with a log and can pick one up
-        else if (go.CompareTag("log") && canObtainLog)
+        if (go.CompareTag("log") && canObtainLog)
         {
             // TL;DR pickup the log and add it to inventory
 
@@ -124,7 +126,8 @@ public class PlayerBehavior : MonoBehaviour
             //reset log timer and stats
             resetLogTimer();
             
-        }else if (go.CompareTag("fruit") && canObtainLog)
+        }
+        else if (go.CompareTag("fruit") && canObtainLog)
         {
             // TL;DR pickup the fruit and add it to inventory
 
@@ -204,16 +207,24 @@ public class PlayerBehavior : MonoBehaviour
         }
     }
 
-    void rayCastShit()
+    GameObject rayCastTree()
     {
         Transform transform = Camera.main.transform;
 
+        LayerMask layerMask = LayerMask.GetMask("Trunk");
+
         RaycastHit hit;
         // Does the ray intersect any objects excluding the player layer
-        if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out hit, Mathf.Infinity))
+        if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out hit,  2, layerMask))
         {
             Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.forward) * hit.distance, Color.yellow);
-            Debug.Log("Did Hit");
+
+            GameObject trunk = hit.collider.gameObject;
+            GameObject tree = trunk.GetComponent<TrunkBehavior>().treeRef;
+            return tree;
+        }else
+        {
+            return null;
         }
     }
 
@@ -225,6 +236,7 @@ public class PlayerBehavior : MonoBehaviour
         cutTimerBehavior();
         axeControls();
         
-        rayCastShit();
+        GameObject tree = rayCastTree();
+        OnTreeVisible(tree);
     }
 }
